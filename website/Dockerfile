@@ -2,16 +2,20 @@ From centos:7.5.1804
 
 MAINTAINER WangDaLei <1244513986@qq.com>
 
-# Enable EPEL for Node.js
-RUN rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+RUN yum install -y wget
 
-# Install Nodejs and NPM
+# Enable EPEL for Node.js
+RUN yum install -y epel-release
+
 RUN yum install -y nodejs
 
-ENV NODE_ENV production
+RUN wget https://dl.yarnpkg.com/rpm/yarn.repo -O /etc/yum.repos.d/yarn.repo
+RUN yum install -y yarn
 
-RUN ls
-RUN cd /blog;
-RUN npm install
+# RUN exec when build image,
+# But mount volumes while runing container(after built),
+# So can not use RUN CD website/src (websit/src not mount that time)
 
-CMD ["npm", "start"]
+# CMD exec when run container,
+# Use '&&' to connect multi commend
+CMD cd website/src && npm start
