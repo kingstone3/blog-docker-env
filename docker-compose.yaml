@@ -1,36 +1,37 @@
 version: '3.0'
 
 services:
-  # Website Redis
+  # Blog Redis
   redis:
     image: redis
-    container_name: website-redis
+    container_name: blog-redis
     ports:
       - "${REDIS_PORT}:6379"
 
-  # Website Server
-  website:
-    build: ./website
-    image: website/website
-    container_name: website
+  # Blog Server
+  blog:
+    build: ./blog
+    image: blog/blog
+    container_name: blog
     ports:
       # Node use port:3000
-      - "${WEBSITE_PORT}:3000"
+      - "${BLOG_PORT}:3000"
     volumes:
-      - "/Users/wanglei/Documents/private-projects/website:/website/src"
-      - "${WEBSITE_LOG_DIR}:/website/log"
+      - "${BLOG_SRC}:/blog/src"
+      - "${BLOG_LOG_DIR}:/blog/log"
     environment:
       NODE_ENV: development
     depends_on:
       - redis
 
+  # Blog Nginx
   nginx:
     build: ./nginx
-    image: website/nginx
-    container_name: website-nginx
+    image: blog/nginx
+    container_name: blog-nginx
     ports:
       - "${NGINX_PORT}:80"
     volumes:
-      - "${WEBSITE_SRC}:/website/src"
+      - "${BLOG_SRC}:/blog/src"
     depends_on:
-      - website
+      - blog
