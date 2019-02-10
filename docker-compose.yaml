@@ -1,6 +1,7 @@
 version: '3.0'
 
 services:
+  # Container name 就是 redis/blog 等
   # Blog Redis
   redis:
     image: redis
