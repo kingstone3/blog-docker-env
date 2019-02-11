@@ -1,38 +1,54 @@
 version: '3.0'
 
 services:
-  # Container name 就是 redis/blog 等
-  # Blog Redis
+  # Container name 就是 redis/website 等
+  # Website Redis
   redis:
     image: redis
-    container_name: blog-redis
+    container_name: website-redis
     ports:
       - "${REDIS_PORT}:6379"
 
-  # Blog Server
-  blog:
-    build: ./blog
-    image: blog/blog
-    container_name: blog
+  # Website Server
+  website:
+    build: ./website
+    image: website/website
+    container_name: website
     ports:
-      # Node use port:3000
-      - "${BLOG_PORT}:3000"
+      # Express use port:3000
+      - "${WEBSITE_PORT}:3000"
     volumes:
-      - "${BLOG_SRC}:/blog/src"
-      - "${BLOG_LOG_DIR}:/blog/log"
+      - "${WEBSITE_SRC}:/website/src"
+      - "${WEBSITE_LOG_DIR}:/website/log"
     environment:
       NODE_ENV: development
     depends_on:
       - redis
 
-  # Blog Nginx
+  # Website Account Server
+  website-account:
+    build: ./website-account
+    image: website/website-account
+    container_name: website-account
+    ports:
+      - "${WEBSITE_ACCOUNT_PORT}:3001"
+    volumes:
+      - "${WEBSITE_SRC}:/website/src"
+      - "${WEBSITE_LOG_DIR}:/website/log"
+    environment:
+      NODE_ENV: development
+    depends_on:
+      - redis
+
+  # Website Nginx
   nginx:
     build: ./nginx
-    image: blog/nginx
-    container_name: blog-nginx
+    image: website/nginx
+    container_name: website-nginx
     ports:
       - "${NGINX_PORT}:80"
     volumes:
-      - "${BLOG_SRC}:/blog/src"
+      - "${WEBSITE_SRC}:/website/src"
     depends_on:
-      - blog
+      - website
+      - website-account

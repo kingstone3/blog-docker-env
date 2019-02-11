@@ -10,8 +10,8 @@ RUN yum install -y nodejs
 
 # RUN exec when build image,
 # But mount volumes while runing container(after built),
-# So can not use RUN CD blog/src (blog/src not mount that time)
+# So can not use RUN CD website/src (website/src not mount that time)
 
 # CMD exec when run container,
 # Use '&&' to connect multi commends
-CMD cd blog/src && npm run start-dev
+CMD cd website/src && npm run start-website-dev
