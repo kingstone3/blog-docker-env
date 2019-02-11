@@ -9,14 +9,13 @@ services:
     ports:
       - "${REDIS_PORT}:6379"
 
-  # Website Server
-  website:
-    build: ./website
-    image: website/website
-    container_name: website
+  # Website Account Server
+  website-account:
+    build: ./website-account
+    image: website/website-account
+    container_name: website-account
     ports:
-      # Express use port:3000
-      - "${WEBSITE_PORT}:3000"
+      - "${WEBSITE_ACCOUNT_PORT}:3001"
     volumes:
       - "${WEBSITE_SRC}:/website/src"
       - "${WEBSITE_LOG_DIR}:/website/log"
@@ -25,13 +24,14 @@ services:
     depends_on:
       - redis
 
-  # Website Account Server
-  website-account:
-    build: ./website-account
-    image: website/website-account
-    container_name: website-account
+  # Website Admin Server
+  website-admin:
+    build: ./website-admin
+    image: website/website-admin
+    container_name: website-admin
     ports:
-      - "${WEBSITE_ACCOUNT_PORT}:3001"
+      # Express use port:3000
+      - "${WEBSITE_ADMIN_PORT}:3000"
     volumes:
       - "${WEBSITE_SRC}:/website/src"
       - "${WEBSITE_LOG_DIR}:/website/log"
@@ -50,5 +50,5 @@ services:
     volumes:
       - "${WEBSITE_SRC}:/website/src"
     depends_on:
-      - website
       - website-account
+      - website-admin

@@ -14,4 +14,4 @@ RUN yum install -y nodejs
 
 # CMD exec when run container,
 # Use '&&' to connect multi commends
-CMD cd website/src && npm run start-website-dev
+CMD cd website/src && npm run start-website-admin-dev
