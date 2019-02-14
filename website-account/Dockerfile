@@ -4,7 +4,11 @@ MAINTAINER WangDaLei <1244513986@qq.com>
 
 RUN yum install -y wget
 
-RUN yum install -y epel-release
+RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
 RUN yum install -y nodejs
+RUN npm upgrade npm -g
+
+RUN npm install babel
+RUN npm install babel-cli
 
 CMD cd website/src && npm run start-website-account-dev
