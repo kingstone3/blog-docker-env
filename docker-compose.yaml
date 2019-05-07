@@ -15,7 +15,7 @@ services:
     image: website/website-account
     container_name: website-account
     ports:
-      - "${WEBSITE_ACCOUNT_PORT}:3001"
+      - "${WEBSITE_ACCOUNT_PORT}:3000"
     volumes:
       - "${WEBSITE_SRC}:/website/src"
       - "${WEBSITE_LOG_DIR}:/website/log"
@@ -30,8 +30,8 @@ services:
     image: website/website-admin
     container_name: website-admin
     ports:
-      # Express use port:3000
-      - "${WEBSITE_ADMIN_PORT}:3000"
+      # Koa use port:3000
+      - "${WEBSITE_ADMIN_PORT}:3001"
     volumes:
       - "${WEBSITE_SRC}:/website/src"
       - "${WEBSITE_LOG_DIR}:/website/log"

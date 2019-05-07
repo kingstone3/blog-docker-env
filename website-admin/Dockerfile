@@ -8,9 +8,6 @@ RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
 RUN yum install -y nodejs
 RUN npm upgrade npm -g
 
-RUN npm install babel
-RUN npm install babel-cli
-
 # RUN exec when build image,
 # But mount volumes while runing container(after built),
 # So can not use RUN CD website/src (website/src not mount that time)
