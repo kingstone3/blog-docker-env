@@ -6,4 +6,6 @@ RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
 RUN yum install -y nodejs
 RUN npm upgrade npm -g
 
-CMD cd website/src && npm run start-website-account-dev
+RUN npm install nodemon -g
+
+CMD cd website/src/servers && npm run start-account-dev

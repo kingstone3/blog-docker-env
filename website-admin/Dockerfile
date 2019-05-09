@@ -6,10 +6,12 @@ RUN curl -sL https://rpm.nodesource.com/setup_10.x | bash -
 RUN yum install -y nodejs
 RUN npm upgrade npm -g
 
+RUN npm install nodemon -g
+
 # RUN exec when build image,
 # But mount volumes while runing container(after built),
 # So can not use RUN CD website/src (website/src not mount that time)
 
 # CMD exec when run container,
 # Use '&&' to connect multi commends
-CMD cd website/src && npm run start-website-admin-dev
+CMD cd website/src/servers && npm run start-admin-dev
